@@ -61,6 +61,8 @@ procedure Lab5 is
       MSLocal: Matrix;
       MX3hLocal: Matrix3H;
       eLocal: Integer;
+
+      A1H: Vector1H;
     begin
       printTextInConsole("T1 started");
       printNewLineInConsole;
@@ -85,7 +87,7 @@ procedure Lab5 is
       T2.Data12(MSLocal, eLocal);
 
       -- calculate expression
-
+      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX3hLocal, 0);
 
     exception
       when E: others => 
@@ -98,6 +100,8 @@ procedure Lab5 is
       Res4h: Vector4H;
       MX, MSLocal: Matrix;
       eLocal: Integer;
+
+      A1H: Vector1H;
     begin
       printTextInConsole("T2 started");
       printNewLineInConsole;
@@ -124,7 +128,11 @@ procedure Lab5 is
       T3.Data23(MSLocal, eLocal, convertMatrixToMatrix4H(MX, 4*H + 1));
 
       -- calculate expression
-
+      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX, 3);
+    
+    exception
+      when E: others => 
+        Put_Line("Error in thread 2: " & Exception_Information(E));
     end T2;
 
     task body T3 is
@@ -133,6 +141,8 @@ procedure Lab5 is
       MSLocal: Matrix;
       MX4hLocal: Matrix4H;
       eLocal: Integer;
+
+      A1H: Vector1H;
     begin
       printTextInConsole("T3 started");
       printNewLineInConsole;
@@ -152,10 +162,14 @@ procedure Lab5 is
       end Data23;
 
       -- send data to T4
-      T4.Data34(Z, D, MSLocal, eLocal, convertMatrixToMatrix3H(MX4Local, H+1));
+      T4.Data34(Z, D, MSLocal, eLocal, convertMatrixToMatrix3H(MX4hLocal, H+1));
 
       -- calculate expression
+      A1H := calculateExpression(Z, MSLocal, eLocal, D, MX4hLocal, 4);
 
+    exception
+      when E: others => 
+        Put_Line("Error in thread 3: " & Exception_Information(E));
     end T3;
 
     task body T4 is
@@ -164,6 +178,8 @@ procedure Lab5 is
       MSLocal: Matrix;
       MX3hLocal: Matrix3H;
       eLocal: Integer;
+
+      A1H: Vector1H;
     begin
       printTextInConsole("T4 started");
       printNewLineInConsole;
@@ -181,6 +197,11 @@ procedure Lab5 is
       T5.Data45(ZLocal, DLocal, MSLocal, eLocal, convertMatrixToMatrix2H(MX3hLocal, H+1));
 
       -- calculate expression
+      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX3hLocal, 5);
+
+    exception
+      when E: others => 
+        Put_Line("Error in thread 4: " & Exception_Information(E));
     end T4;
 
     task body T5 is
@@ -189,6 +210,8 @@ procedure Lab5 is
       MSLocal: Matrix;
       MX2hLocal: Matrix2H;
       eLocal: Integer;
+
+      A1H: Vector1H;
     begin
       printTextInConsole("T5 started");
       printNewLineInConsole;
@@ -206,6 +229,11 @@ procedure Lab5 is
       T6.Data56(ZLocal, DLocal, MSLocal, eLocal, convertMatrixToMatrix1H(MX2hLocal, H+1));
 
       -- calculate expression
+      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX2hLocal, 6);
+
+    exception
+      when E: others => 
+        Put_Line("Error in thread 5: " & Exception_Information(E));
     end T5;
 
     task body T6 is
@@ -214,6 +242,8 @@ procedure Lab5 is
       MSLocal: Matrix;
       MX1hLocal: Matrix1H;
       eLocal: Integer;
+
+      A1H: Vector1H;
     begin
       printTextInConsole("T6 started");
       printNewLineInConsole;
@@ -228,8 +258,11 @@ procedure Lab5 is
       end Data56;
 
       -- calculate expression
+      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX1hLocal, 7);
 
-
+    exception
+      when E: others => 
+        Put_Line("Error in thread 6: " & Exception_Information(E));
     end T6;
 
     task body T7 is
@@ -238,6 +271,8 @@ procedure Lab5 is
       MSLocal: Matrix;
       MX1hLocal: Matrix1H;
       eLocal: Integer;
+
+      A1H: Vector1H;
     begin
       printTextInConsole("T7 started");
       printNewLineInConsole;
@@ -252,6 +287,11 @@ procedure Lab5 is
       end Data87;
 
       -- calculate expression
+      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX1hLocal, 2);
+
+    exception
+      when E: others => 
+        Put_Line("Error in thread 7: " & Exception_Information(E));
     end T7;
 
     task body T8 is
@@ -260,6 +300,8 @@ procedure Lab5 is
       MS: Matrix;
       MX2hLocal: Matrix2H;
       e: Integer;
+
+      A1H: Vector1H;
     begin
       printTextInConsole("T8 started");
       printNewLineInConsole;
@@ -282,6 +324,7 @@ procedure Lab5 is
       T7.Data87(MS, e, ZLocal, DLocal, convertMatrixToMatrix1H(MX2hLocal, H+1));
 
       -- calculate expression
+      A1H := calculateExpression(ZLocal, MS, e, DLocal, MX2hLocal, 1);
       
     exception
       when E: others => 

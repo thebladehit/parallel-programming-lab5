@@ -27,15 +27,30 @@ package Data is
     subtype Matrix3H is MatrixGeneral(1..N, 1..3*H);
     subtype Matrix4H is MatrixGeneral(1..N, 1..4*H);
 
-   procedure printNewLineInConsole;
-   procedure printTextInConsole(text: String);
-   procedure printMatrixInConsole(M: MatrixGeneral);
+  procedure printNewLineInConsole;
+  procedure printTextInConsole(text: String);
+  procedure printMatrixInConsole(M: MatrixGeneral);
+  procedure printVectorInConsole(V: VectorGeneral);
 
-   procedure fillVectorByNums(V: in out Vector; num: Integer);
-   procedure fillMatrixByNums(M: in out Matrix; num: Integer);
+  procedure fillVectorByNums(V: in out Vector; num: Integer);
+  procedure fillMatrixByNums(M: in out Matrix; num: Integer);
+  
+  function calculateExpression(
+    Z: in Vector; 
+    MS: in Matrix; 
+    e: in Integer;
+    D: in Vector;
+    MX: in MatrixGeneral;
+    taskNum: in Integer
+  ) return Vector1H;
+  function multiplyMatrices(firstM: Matrix1H; secondM: Matrix) return Matrix1H;
+  function multiplyVectorOnMatrix(V: Vector; M: Matrix1H) return Vector1H;
+  function multiplyVectorOnScalar(V: Vector1H; scalar: Integer) return Vector1H;
+  function sumVectors(firstV: Vector1H; secondV: Vector1H) return Vector1H;
 
-   function convertMatrixToMatrix4H(M: in MatrixGeneral; start: Integer) return Matrix4H;
-   function convertMatrixToMatrix3H(M: in MatrixGeneral; start: Integer) return Matrix3H;
-   function convertMatrixToMatrix2H(M: in MatrixGeneral; start: Integer) return Matrix2H;
-   function convertMatrixToMatrix1H(M: in MatrixGeneral; start: Integer) return Matrix1H;
+  function convertMatrixToMatrix4H(M: in MatrixGeneral; start: Integer) return Matrix4H;
+  function convertMatrixToMatrix3H(M: in MatrixGeneral; start: Integer) return Matrix3H;
+  function convertMatrixToMatrix2H(M: in MatrixGeneral; start: Integer) return Matrix2H;
+  function convertMatrixToMatrix1H(M: in MatrixGeneral; start: Integer) return Matrix1H;
+  function getHColumnFromMatrix(M: in MatrixGeneral; taskNum: Integer) return Matrix1H;
 end Data;

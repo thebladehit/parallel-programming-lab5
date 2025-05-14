@@ -15,12 +15,14 @@ with Ada.Exceptions; use Ada.Exceptions;
 procedure Lab5 is
   procedure runTasks is
     task T1 is
+      pragma Storage_Size(20_000_000);
       entry Data21(Z: in Vector; D: in Vector; MX3h: in Matrix3H);
       entry Data81(MS: in Matrix; e: in Integer);
       entry Res81(A2h: in Vector2H);
     end T1;
 
     task T2 is
+      pragma Storage_Size(20_000_000);
       entry Data12(MS: in Matrix; e: in Integer);
       entry Data32(Z: in Vector; D: in Vector);
       entry Res12(A3h: in Vector3H);
@@ -28,29 +30,35 @@ procedure Lab5 is
     end T2;
 
     task T3 is
+      pragma Storage_Size(20_000_000);
       entry Data23(MS: in Matrix; e: in Integer; MX4h: in Matrix4H);
       entry Res43(A3h: in Vector3H);
     end T3;
 
     task T4 is
+      pragma Storage_Size(20_000_000);
       entry Data34(Z: in Vector; D: in Vector; MS: in Matrix; e: in Integer; MX3h: in Matrix3H);
       entry Res54(A2h: in Vector2H);
     end T4;
 
     task T5 is
+      pragma Storage_Size(20_000_000);
       entry Data45(Z: in Vector; D: in Vector; MS: in Matrix; e: in Integer; MX2h: in Matrix2H);
       entry Res65(A1h: in Vector1H);
     end T5;
 
     task T6 is
+      pragma Storage_Size(20_000_000);
       entry Data56(Z: in Vector; D: in Vector; MS: in Matrix; e: in Integer; MX1h: in Matrix1H);
     end T6;
 
     task T7 is
+      pragma Storage_Size(20_000_000);
       entry Data87(MS: in Matrix; e: in Integer; Z: in Vector; D: in Vector; MX1h: in Matrix1H);
     end T7;
 
     task T8 is
+      pragma Storage_Size(20_000_000);
       entry Data18(Z: in Vector; D: in Vector; MX2h: in Matrix2H);
       entry Res78(A1h: in Vector1H);
     end T8;

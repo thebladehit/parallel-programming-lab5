@@ -11,6 +11,7 @@
 with Data; use Data;
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Exceptions; use Ada.Exceptions;
+with Ada.Real_Time; use Ada.Real_Time;
 
 procedure Lab5 is
   procedure runTasks is
@@ -169,8 +170,8 @@ procedure Lab5 is
       A := groupVectors(A187, A1H, A3456H);
 
       -- print A vector
-      printNewLineInConsole;
-      printVectorInConsole(A);
+      --  printNewLineInConsole;
+      --  printVectorInConsole(A);
     
       printNewLineInConsole;
       printTextInConsole("T2 finished");
@@ -441,13 +442,24 @@ procedure Lab5 is
   begin
     null;
   end runTasks;
+
+  Start_Time: Time;
+  End_Time: Time;
+  Elapsed: Time_Span;
 begin
   -- start program
   printTextInConsole("Main started");
   printNewLineInConsole;
 
+  Start_Time := Ada.Real_Time.Clock;
+
   -- run tasks
   runTasks;
+
+  -- measure time execution
+  End_Time := Ada.Real_Time.Clock;
+  Elapsed := End_Time - Start_Time;
+  Put_Line("Execution time: " & Duration'Image(To_Duration(Elapsed)) & " seconds");
 
   -- end program
   printTextInConsole("Main finished");

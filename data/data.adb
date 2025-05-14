@@ -50,7 +50,7 @@ package body Data is
    begin
       for i in 1..N loop
          for j in 1..N loop
-            M(i, j) := j;
+            M(i, j) := num;
          end loop;
       end loop;
    end fillMatrixByNums;
@@ -127,7 +127,7 @@ package body Data is
    begin
       for i in 1..N loop
          colIndex := 1;
-         for j in start..start+3*H loop
+         for j in start..start+4*H-1 loop
             resM(i, colIndex) := M(i, j);
             colIndex := colIndex + 1;
          end loop;
@@ -141,7 +141,7 @@ package body Data is
    begin
       for i in 1..N loop
          colIndex := 1;
-         for j in start..start+2*H loop
+         for j in start..start+3*H-1 loop
             resM(i, colIndex) := M(i, j);
             colIndex := colIndex + 1;
          end loop;
@@ -155,7 +155,7 @@ package body Data is
    begin
       for i in 1..N loop
          colIndex := 1;
-         for j in start..start+1*H loop
+         for j in start..start+2*H-1 loop
             resM(i, colIndex) := M(i, j);
             colIndex := colIndex + 1;
          end loop;
@@ -164,11 +164,14 @@ package body Data is
    end convertMatrixToMatrix2H;
 
    function convertMatrixToMatrix1H(M: in MatrixGeneral; start: Integer) return Matrix1H is
+      colIndex: Integer;
       resM: Matrix1H;
    begin
       for i in 1..N loop
+         colIndex := 1;
          for j in start..start+H-1 loop
-            resM(i, 1) := M(i, j);
+            resM(i, colIndex) := M(i, j);
+            colIndex := colIndex + 1;
          end loop;
       end loop;
       return resM;

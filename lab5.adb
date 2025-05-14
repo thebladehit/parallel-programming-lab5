@@ -63,6 +63,7 @@ procedure Lab5 is
       eLocal: Integer;
 
       A1H: Vector1H;
+      A87H: Vector2H;
     begin
       printTextInConsole("T1 started");
       printNewLineInConsole;
@@ -89,6 +90,19 @@ procedure Lab5 is
       -- calculate expression
       A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX3hLocal, 0);
 
+      -- receive res from T8
+      accept Res81(A2h: in Vector2H) do
+        A87H := A2h;
+      end Res81;
+
+      -- group data
+      Res3h := Data.groupVectorsTo3HVector(A1H, A87H);
+
+      -- send res to T2
+      T2.Res12(Res3h);
+
+      printNewLineInConsole;
+      printTextInConsole("T1 finished");
     exception
       when E: others => 
         Put_Line("Error in thread 1: " & Exception_Information(E));
@@ -96,12 +110,12 @@ procedure Lab5 is
 
     task body T2 is
       ZLocal, DLocal, A: Vector;
-      Res3h: Vector3H;
-      Res4h: Vector4H;
       MX, MSLocal: Matrix;
       eLocal: Integer;
 
       A1H: Vector1H;
+      A187: Vector3H;
+      A3456H: Vector4H;
     begin
       printTextInConsole("T2 started");
       printNewLineInConsole;
@@ -128,8 +142,30 @@ procedure Lab5 is
       T3.Data23(MSLocal, eLocal, convertMatrixToMatrix4H(MX, 4*H + 1));
 
       -- calculate expression
-      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX, 3);
+      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, getHColumnFromMatrix(MX, 3), 3);
+
+      -- reveive res from T1 and T3
+      for i in 1..2 loop
+        select 
+          accept Res12(A3h: in Vector3H) do
+            A187 := A3h;
+          end Res12;
+        or 
+          accept Res32(A4h: in Vector4H) do
+            A3456H := A4h;
+          end Res32;
+        end select;
+      end loop;
+
+      -- group data
+      A := groupVectors(A187, A1H, A3456H);
+
+      -- print A vector
+      printNewLineInConsole;
+      printVectorInConsole(A);
     
+      printNewLineInConsole;
+      printTextInConsole("T2 finished");
     exception
       when E: others => 
         Put_Line("Error in thread 2: " & Exception_Information(E));
@@ -143,6 +179,7 @@ procedure Lab5 is
       eLocal: Integer;
 
       A1H: Vector1H;
+      A456H: Vector3H;
     begin
       printTextInConsole("T3 started");
       printNewLineInConsole;
@@ -167,6 +204,19 @@ procedure Lab5 is
       -- calculate expression
       A1H := calculateExpression(Z, MSLocal, eLocal, D, MX4hLocal, 4);
 
+      -- receive res from T4
+      accept Res43(A3h: in Vector3H) do
+        A456H := A3h;
+      end Res43;
+
+      -- group data
+      Res4h := groupVectorsTo4HVector(A1H, A456H);
+
+      -- send res to T2
+      T2.Res32(Res4h);
+
+      printNewLineInConsole;
+      printTextInConsole("T3 finished");
     exception
       when E: others => 
         Put_Line("Error in thread 3: " & Exception_Information(E));
@@ -180,6 +230,7 @@ procedure Lab5 is
       eLocal: Integer;
 
       A1H: Vector1H;
+      A56H: Vector2H;
     begin
       printTextInConsole("T4 started");
       printNewLineInConsole;
@@ -199,6 +250,19 @@ procedure Lab5 is
       -- calculate expression
       A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX3hLocal, 5);
 
+      -- receive res from T5
+      accept Res54(A2h: Vector2H) do
+        A56H := A2h;
+      end Res54;
+
+      -- group data
+      Res3h := groupVectorsTo3HVector(A1H, A56H);
+
+      -- send res to T3
+      T3.Res43 (Res3h);
+
+      printNewLineInConsole;
+      printTextInConsole("T4 finished");
     exception
       when E: others => 
         Put_Line("Error in thread 4: " & Exception_Information(E));
@@ -212,6 +276,7 @@ procedure Lab5 is
       eLocal: Integer;
 
       A1H: Vector1H;
+      A6H: Vector1H;
     begin
       printTextInConsole("T5 started");
       printNewLineInConsole;
@@ -231,6 +296,19 @@ procedure Lab5 is
       -- calculate expression
       A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX2hLocal, 6);
 
+      -- receive res from T6
+      accept Res65(A1h: in Vector1H) do
+        A6H := A1h;
+      end Res65;
+
+      -- group data
+      Res2h := groupVectorsTo2HVector(A1H, A6H);
+
+      -- send res to T4
+      T4.Res54(Res2h);
+
+      printNewLineInConsole;
+      printTextInConsole("T5 finished");
     exception
       when E: others => 
         Put_Line("Error in thread 5: " & Exception_Information(E));
@@ -242,8 +320,6 @@ procedure Lab5 is
       MSLocal: Matrix;
       MX1hLocal: Matrix1H;
       eLocal: Integer;
-
-      A1H: Vector1H;
     begin
       printTextInConsole("T6 started");
       printNewLineInConsole;
@@ -258,8 +334,13 @@ procedure Lab5 is
       end Data56;
 
       -- calculate expression
-      A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX1hLocal, 7);
+      Res1h := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX1hLocal, 7);
 
+      -- send res to T5
+      T5.Res65(Res1h);
+
+      printNewLineInConsole;
+      printTextInConsole("T6 finished");
     exception
       when E: others => 
         Put_Line("Error in thread 6: " & Exception_Information(E));
@@ -289,6 +370,11 @@ procedure Lab5 is
       -- calculate expression
       A1H := calculateExpression(ZLocal, MSLocal, eLocal, DLocal, MX1hLocal, 2);
 
+      -- send res to T8
+      T8.Res78(A1h);
+
+      printNewLineInConsole;
+      printTextInConsole("T7 finished");
     exception
       when E: others => 
         Put_Line("Error in thread 7: " & Exception_Information(E));
@@ -302,6 +388,7 @@ procedure Lab5 is
       e: Integer;
 
       A1H: Vector1H;
+      A71H: Vector1H;
     begin
       printTextInConsole("T8 started");
       printNewLineInConsole;
@@ -325,7 +412,20 @@ procedure Lab5 is
 
       -- calculate expression
       A1H := calculateExpression(ZLocal, MS, e, DLocal, MX2hLocal, 1);
-      
+
+      -- receive res from T7
+      accept Res78(A1h: in Vector1H) do
+        A71H := A1h;
+      end Res78;
+
+      -- group data
+      Res2h := Data.groupVectorsTo2HVector(A1H, A71H);
+
+      -- send res to T1
+      T1.Res81(Res2h);
+
+      printNewLineInConsole;
+      printTextInConsole("T8 finished");
     exception
       when E: others => 
         Put_Line("Error in thread 8: " & Exception_Information(E));

@@ -53,4 +53,9 @@ package Data is
   function convertMatrixToMatrix2H(M: in MatrixGeneral; start: Integer) return Matrix2H;
   function convertMatrixToMatrix1H(M: in MatrixGeneral; start: Integer) return Matrix1H;
   function getHColumnFromMatrix(M: in MatrixGeneral; taskNum: Integer) return Matrix1H;
+
+  function groupVectorsTo2HVector(V1: Vector1H; V2: VectorGeneral) return Vector2H;
+  function groupVectorsTo3HVector(V1: Vector1H; V2: VectorGeneral) return Vector3H;
+  function groupVectorsTo4HVector(V1: Vector1H; V2: VectorGeneral) return Vector4H;
+  function groupVectors(V1: VectorGeneral; V2: VectorGeneral; V3: VectorGeneral) return Vector;
 end Data;

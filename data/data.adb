@@ -50,7 +50,7 @@ package body Data is
    begin
       for i in 1..N loop
          for j in 1..N loop
-            M(i, j) := j; -- num
+            M(i, j) := j;
          end loop;
       end loop;
    end fillMatrixByNums;
@@ -189,4 +189,60 @@ package body Data is
       end loop;
       return resM;
    end getHColumnFromMatrix;
+
+   function groupVectorsTo2HVector(V1: Vector1H; V2: VectorGeneral) return Vector2H is
+      resV: Vector2H;
+   begin
+      for i in 1..H loop
+         resV(i) := V1(i);
+      end loop;
+
+      for i in V2'Range(1) loop
+         resV(i + H) := V2(i);
+      end loop;
+      return resV;
+   end groupVectorsTo2HVector;
+
+   function groupVectorsTo3HVector(V1: Vector1H; V2: VectorGeneral) return Vector3H is
+      resV: Vector3H;
+   begin
+      for i in 1..H loop
+         resV(i) := V1(i);
+      end loop;
+
+      for i in V2'Range(1) loop
+         resV(i + H) := V2(i);
+      end loop;
+      return resV;
+   end groupVectorsTo3HVector;
+
+   function groupVectorsTo4HVector(V1: Vector1H; V2: VectorGeneral) return Vector4H is
+      resV: Vector4H;
+   begin
+      for i in 1..H loop
+         resV(i) := V1(i);
+      end loop;
+
+      for i in V2'Range(1) loop
+         resV(i + H) := V2(i);
+      end loop;
+      return resV;
+   end groupVectorsTo4HVector;
+
+   function groupVectors(V1: VectorGeneral; V2: VectorGeneral; V3: VectorGeneral) return Vector is
+      resV: Vector;
+   begin
+      for i in V1'Range(1) loop
+         resV(i) := V1(i);
+      end loop;
+
+      for i in V2'Range(1) loop
+         resV(i + V1'Length(1)) := V2(i);
+      end loop;
+
+      for i in V3'Range(1) loop
+         resV(i + V1'Length(1) + V2'Length(1)) := V3(i);
+      end loop;
+      return resV;
+   end groupVectors;
 end Data;
